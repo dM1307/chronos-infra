@@ -28,6 +28,21 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.0.3
+    container_name: chronos-keycloak
+    restart: always
+    environment:
+      KC_DB: h2
+      KC_HTTP_ENABLED: "true"
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+
 volumes:
   chronos_pgdata:
   pgadmin_data:
